@@ -2,8 +2,6 @@
 #include<stdlib.h>
 #include<time.h>
 
-//テスト
-
 #define DAY 2
 #define PERIOD 2
 
