@@ -46,16 +46,21 @@ int main(){
     };
     
     while(flag!=0){
-        ROOM room[3]={};
-        TEACHER teacher[3]={};
-        CLASS class[3]={};
+        ROOM room[5]={};
+        room[0].size = 0;
+        room[1].size = 0;
+        room[2].size = 1;
+        room[3].size = 1;
+        room[4].size = 2;
+        TEACHER teacher[5]={};
+        CLASS class[5]={};
         for(i=0;i<10;i++){
             if(subject[i].size==2){
                 j = rand()%DAY;
                 k = rand()%PERIOD;
                 per = subject[i].teacher;
                 cla = subject[i].class;
-                room[2].date[j][k]++;
+                room[4].date[j][k]++;
                 teacher[per].date[j][k]++;
                 class[cla].date[j][k]++;
                 subject[i].day = j;
@@ -66,23 +71,24 @@ int main(){
                 k = rand()%PERIOD;
                 per = subject[i].teacher;
                 cla = subject[i].class;
-                room[1].date[j][k]++;
+                room[rand()%2+2].date[j][k]++;
                 teacher[per].date[j][k]++;
                 class[cla].date[j][k]++;
                 subject[i].day = j;
                 subject[i].period = k;
+                
             }else{
                 j = rand()%DAY;
                 k = rand()%PERIOD;
                 per = subject[i].teacher;
                 cla = subject[i].class;
-                room[0].date[j][k]++;
+                room[rand()%2].date[j][k]++;
                 teacher[per].date[j][k]++;
                 class[cla].date[j][k]++;
                 subject[i].day = j;
                 subject[i].period = k;
+                
             }
-
         }
         flag = FinalCheck(room, teacher, class);
 
@@ -95,7 +101,7 @@ int main(){
 int FinalCheck(ROOM room[],TEACHER teacher[],CLASS class[]){
     int j,k,l;
     int count = 0;
-    for(l=0;l<3;l++){
+    for(l=0;l<5;l++){
         for(j=0;j<DAY;j++){
             for(k=0;k<PERIOD;k++){
                 if(room[l].date[j][k]>=2){
