@@ -38,9 +38,10 @@ int FinalCheck(ROOM room[],TEACHER teacher[],CLASS class[],SUBJECT subject[],COM
 
 int main(){
     srand((unsigned)time(NULL));
+    //もろもろの変数宣言
     int i,j,k,l,per,cla;
-    int flag=1;
-    int count=0;
+    int flag=1;                 //flagはwhileループ回すためのもの
+    int count=0;                //countはwhileループ回した回数
     SUBJECT subject[NUMOFSUBJ]={
         {0,0,0,0,0,0,1},
         {1,2,0,0,0,0,1},
@@ -65,7 +66,7 @@ int main(){
         
     };
     
-    
+    //ここからwhileループ
     while(flag!=0){
         ROOM room[5]={};
         COMPULSORY compulsoryData={};
