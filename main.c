@@ -18,7 +18,6 @@ typedef struct{
 
 typedef struct{
     int date[DAY][PERIOD];
-    int size;
 }ROOM;
 
 typedef struct{
@@ -118,9 +117,11 @@ int main(){
 int MidCheck(int newDay,int newPeriod,int newRoom,SUBJECT targetSubject,ROOM room[],TEACHER teacher[],CLASS class[], COMPULSORY compulsoryData){
     int oldCount = 0;
     int newCount = 0;
-    int i,j,k,oldDay,oldPeriod;
+    int oldDay,oldPeriod;
     oldDay = targetSubject.day;
     oldPeriod = targetSubject.period;
+    
+    //ここから遷移させる前の違反数検出
     if(room[targetSubject.room].date[oldDay][oldPeriod]>=2){
         oldCount += room[targetSubject.room].date[oldDay][oldPeriod]-1;
     }
@@ -133,15 +134,29 @@ int MidCheck(int newDay,int newPeriod,int newRoom,SUBJECT targetSubject,ROOM roo
     if(compulsoryData.date[oldDay][oldPeriod]>=2){
         oldCount += compulsoryData.date[oldDay][oldPeriod]-1;
     }
+    if(room[newRoom].date[oldDay][oldPeriod]>=2){
+        oldCount += room[newRoom].date[oldDay][oldPeriod]-1;
+    }
     
-    
-    
-    
-    
-    
-    
-    
-    return 0;
+    //ここから遷移させた後の違反数検出(遷移させた後なので1を引かない)
+    if(room[newRoom].date[newDay][newPeriod]>=1){
+        newCount += room[newRoom].date[newDay][newPeriod];
+    }
+    if(teacher[targetSubject.teacher].date[newDay][newPeriod]>=1){
+        newCount += teacher[targetSubject.teacher].date[newDay][newPeriod];
+    }
+    if(class[targetSubject.class].date[newDay][newPeriod]>=1){
+        newCount += class[targetSubject.class].date[newDay][newPeriod];
+    }
+    if(compulsoryData.date[newDay][newPeriod]>=1){
+        if(targetSubject.compulsory==1){
+            newCount += compulsoryData.date[newDay][newPeriod];
+        }else{
+            newCount += compulsoryData.date[newDay][newPeriod]-1;
+        }
+    }
+
+    return oldCount-newCount;
 }
 
 int FinalCheck(ROOM room[],TEACHER teacher[],CLASS class[],SUBJECT subject[],COMPULSORY compulsoryData){
