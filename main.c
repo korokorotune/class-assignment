@@ -65,18 +65,21 @@ int main(){
         
     };
     
+    ROOM room[5]={};
+    
+    
     //ここからwhileループ
     while(flag!=0){
         ROOM room[5]={};
         COMPULSORY compulsoryData={};
         /*
-        この部分はいらない気がする
-        room[0].size = 0;
-        room[1].size = 0;
-        room[2].size = 1;
-        room[3].size = 1;
-        room[4].size = 2;
-        */
+         この部分はいらない気がする
+         room[0].size = 0;
+         room[1].size = 0;
+         room[2].size = 1;
+         room[3].size = 1;
+         room[4].size = 2;
+         */
         TEACHER teacher[5]={};
         CLASS class[5]={};
         for(i=0;i<NUMOFSUBJ;i++){
@@ -105,15 +108,26 @@ int main(){
         }
         
         flag = FinalCheck(room, teacher, class, subject, compulsoryData);
-        count++;
-
+        
+        
     }
+    
+    /*
+     while(flag!=0){
+     for(i=0;i<NUMOFSUBJ;i++){
+     if(room[subject[i].class].date[subject])
+     }
+     }
+     */
     for(i=0;i<NUMOFSUBJ;i++){
         printf("subject[%d]は%d日目の%d時間目です。教室は%dです(%d)\n",i,subject[i].day+1,subject[i].period+1,subject[i].room,subject[i].class);
+        printf("%d\n",room[subject[i].room].date[subject[i].day][subject[i].period]);
     }
-    printf("%d\n",count);
+    
+    
 }
 
+//途中で判定するための簡易判定関数
 int MidCheck(int newDay,int newPeriod,int newRoom,SUBJECT targetSubject,ROOM room[],TEACHER teacher[],CLASS class[], COMPULSORY compulsoryData){
     int oldCount = 0;
     int newCount = 0;
@@ -155,10 +169,14 @@ int MidCheck(int newDay,int newPeriod,int newRoom,SUBJECT targetSubject,ROOM roo
             newCount += compulsoryData.date[newDay][newPeriod]-1;
         }
     }
-
+    if(room[targetSubject.room].date[newDay][newPeriod]>=2){
+        newCount += room[targetSubject.room].date[newDay][newPeriod]-2;
+    }
+    
     return oldCount-newCount;
 }
 
+//最終的に判定するための判定関数
 int FinalCheck(ROOM room[],TEACHER teacher[],CLASS class[],SUBJECT subject[],COMPULSORY compulsoryData){
     int i,j,k;
     int count = 0;
