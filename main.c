@@ -2,8 +2,8 @@
 #include<stdlib.h>
 #include<time.h>
 
-#define DAY 4
-#define PERIOD 4
+#define DAY 3
+#define PERIOD 3
 #define NUMOFSUBJ 20
 #define TABOO 3
 
@@ -205,7 +205,7 @@ int SimCheck(SUBJECT targetSubject,ROOM room[],TEACHER teacher[],CLASS class[], 
     count += teacher[targetSubject.teacher].date[day][period]-1;
     count += class[targetSubject.class].date[day][period]-1;
     if(targetSubject.compulsory==1){
-        count += compulsoryData.date[day][period];
+        count += compulsoryData.date[day][period]-1;
     }
     return count;
 }
